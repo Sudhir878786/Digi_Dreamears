@@ -88,7 +88,9 @@ app.get("/dealer", function (req, res) {
 app.get("/driver", function (req, res) {
   res.render("Driver.ejs");
 });
-
+app.get("/OTP", function (req, res) {
+  res.render("otp.ejs");
+});
 app.listen(port, () => {
   console.log("done");
 });
