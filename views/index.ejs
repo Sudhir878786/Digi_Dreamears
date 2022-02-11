@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Todo App</title>
+        <link rel="stylesheet" type="text/css" href="/index.css" />
+    </head>
+    <body>
+        
+        <center><h2 style="color: rgb(235, 98, 85); letter-spacing: 30px;">Todo Task App</h2></center>
+
+        <div class="container" id="container">
+            <%if(data.length!=0) {%><div class="productList">
+                <table>
+                    <tr>
+                        <th>
+                            Check
+                        </th>
+                        <th>
+                            S.No
+                        </th>
+                        <th>
+                            Task Title
+                        </th>
+                        <th>
+                            Task Description
+                        </th>
+                        <th>
+                            Operations
+                        </th>
+                    </tr>
+
+                    <% for(var i=0; i<data.length; i++) {%>
+                        <tr>
+                        <td>
+                            <% if(data[i].isChecked){%>
+                           <button onclick="handleCheck('<%=i%>',false)" class="checkButtonD">Unmark</button><%}%>
+                          <% if(!data[i].isChecked) {%> <button onclick="handleCheck('<%=i%>',true)" class="checkButtonU">Done</button><%}%>
+                        </td>
+                        <td>
+                            <%=(i+1)%>
+                        </td>
+                        <td>
+                            <%= data[i].taskTitle%>
+                        </td>
+                        <td>
+                            <%=data[i].taskDescription%>
+                        </td>
+                        <td>
+                            <% if(data[i].isChecked){%>
+                                <button onclick="del('<%=data[i].taskTitle%>')" class="checkButtonD">Delete</button><%}%>
+                               <% if(!data[i].isChecked) {%> <button onclick="edit('<%=i%>')" class="checkButtonU">Edit</button><%}%>
+                           
+                        </td>
+
+                        </tr>
+                    <% } %>
+                </table>
+            </div>
+            <%}%>
+            <%if(data.length==0) {%>
+                <center><h4>Your todo list will appear here!!</h4></center>
+                <%}%>
+            <div class="form">
+            <form action="/add" method="post">
+                <div class="field">
+                    <label class="label" for="taskTitle">Task Title:</label>
+                    <input class="input" name="taskTitle" type="text">
+                </div>
+                <div class="field">
+                    <label class="label" for="taskDescription">Task Description:</label>
+                    <input class="input" name="taskDescription" type="text">
+                </div>
+
+                    <button  class="addButton"  type="submit">Add Task</button>
+
+            </form>
+            </div>
+        </div>
+            <div class="editForm" id="pop">
+            <form action="/update" method="post" class="edit">
+                <% if(ind) {%>
+                    <h3 style="margin-bottom: 20px; letter-spacing: 3px; color: rgb(235, 98, 85);">Udpate your task</h3>
+                    
+                    <br><div style="display: flex;">
+                <div class="field">
+                    <label class="label" for="taskTitle">Task Title:</label>
+                    <input class="input" name="taskTitle" value="<%=data[ind].taskTitle%>" type="text">
+                </div>
+                <div class="field">
+                    <label class="label" for="taskDescription">Task Description:</label>
+                    <input class="input" name="taskDescription"  value="<%=data[ind].taskDescription%>" type="text">
+                </div></div>
+                <%}%>
+                <br>
+                <br>
+                    
+                    <button onclick="popClose()"  class="cancel" style="margin-top: 10px;" type="button">Cancel</button>
+                    <button  class="update" style="margin-top: 10px;" type="submit">Update</button>
+                <br>
+                <br>
+            </form>
+            </div>
+        
+        <script>
+            
+          function  handleCheck(index,isDone){
+             window.location.pathname = '/check/'+index+'/'+isDone;
+            
+          }
+          function del(title){
+            window.location.pathname = '/del/'+title;
+          }
+          function edit(index){
+            window.location.pathname = '/edit/'+index;
+          }
+          
+          if('<%=ind %>'){
+
+          document.getElementById("pop").style.transition="all 100ms ease-in-out"
+      document.getElementById("pop").style.transform="translate(-50%,-50%) scale(1)";
+      document.getElementById("container").style.opacity="0.8"
+          }
+          else{
+            document.getElementById("pop").style.transition="all 100ms ease-in-out"
+      document.getElementById("pop").style.transform="translate(-50%,-50%) scale(0)";
+      document.getElementById("container").style.opacity="1"
+          }
+          function popClose(){
+            window.location.pathname = '/popClose';
+          }
+        </script>
+    </body>
+</html>
