@@ -80,7 +80,13 @@ app.use(express.static(path.join(__dirname, "assets")));
 //   res.render("index", { data: userData, ind: ind });
 // });
 app.get("/", function (req, res) {
-  res.render("home.ejs");
+  res.render("index.ejs");
+});
+app.get("/dealer", function (req, res) {
+  res.render("Dealer.ejs");
+});
+app.get("/driver", function (req, res) {
+  res.render("Driver.ejs");
 });
 
 app.listen(port, () => {
