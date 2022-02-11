@@ -11,7 +11,7 @@
             <legend>Please, enter your email and password for login.</legend>
             <div class="input-block">
               
-              <input id="login-email" type="email" placeholder="Email" required>
+              <input id="login-email" onchange="onChangeTest(this)" type="email" placeholder="Email" required>
             
             <div class="input-block">
               
@@ -53,6 +53,13 @@
       </div>
     </div>
   </section>
+  
+  <script>
+	   function onChangeTest(changeVal) {
+        const email=changeVal.value;
+		console.log(email);
+      }
+  </script>
   <style>
       *,
 *::before,
