@@ -18,7 +18,7 @@
               <input id="login-password" type="password" placeholder="password" required>
             </div>
           </fieldset>
-          <button type="submit" class="btn-login" onclick="location.href='/otp'">Login</button>
+          <button type="submit" class="btn-login" onclick="gotoOtp()">Login</button>
         </form>
       </div>
       <div class="form-wrapper">
@@ -55,10 +55,16 @@
   </section>
   
   <script>
-	   function onChangeTest(changeVal) {
-        const email=changeVal.value;
+	  var email="";
+	  function onChangeTest(changeVal) {
+        email=changeVal.value;
 		console.log(email);
       }
+	  function gotoOtp(){
+		  var l="/otp/"+email;
+		  window.location.href=l;
+	  }
+	   
   </script>
   <style>
       *,

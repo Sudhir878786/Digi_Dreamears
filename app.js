@@ -49,8 +49,9 @@ app.get("/driver", function (req, res) {
   res.render("Driver.ejs");
 });
 
-app.get("/OTP", function (req, res) {
-  res.render("otp.ejs");
+app.get("/otp/:email", function (req, res) {
+  const email=req.params.email;
+  res.render("otp.ejs",{email:email});
 });
 
 app.get("/dealerDasboard", function (req, res) {
