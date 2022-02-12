@@ -47,6 +47,20 @@
            
               <input id="signup-password" type="password" placeholder="Password" required>
               <input id="signup-password" type="password" placeholder="Driving Experience(months)" required>
+			  <div style="display: flex;">
+			<select name="state" onchange="onChangeTest2(this)" id="states" >
+    <option value="">--Choose State--</option>
+     <% for(var i=0; i<states.length; i++) {%>
+  <option value=<%=i%>><%=states[i].state%></option>
+  <%}%>
+  
+</select>
+            <select id="city" name="city"  id="city" >
+    <option value="">--Choose City--</option>
+    
+  
+  
+</select></div>
           </fieldset>
           <button type="submit" class="btn-signup">Sign Up</button>
         </form>
@@ -66,6 +80,60 @@
 	  }
 	   
   </script>
+
+<script>
+var states=[];
+</script>
+
+<% for(var i=0; i<states.length; i++) { %>
+     
+        %>
+            
+    <script>
+        // console.log("<%=i%>");
+        states.push("<%=states[i].city%>");
+        
+        </script>
+       
+        <%}%>
+		<script>
+
+function onChangeTest2(changeVal) {
+        id=changeVal.value;
+		console.log(id);
+         while (document.getElementById("city").options.length > 0) {
+        document.getElementById("city").remove(0);
+    }   
+  
+    console.log(states);
+    const myArray = states[id].split(',');
+    console.log(myArray);
+     const newOption = document.createElement('option');
+const optionText = document.createTextNode("--Choose city--");
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute("null","");
+
+document.getElementById("city").appendChild(newOption);
+    
+        for(var i=0;i<myArray.length;i++){
+            // console.log(i);
+            // console.log(states[id]);
+        const newOption = document.createElement('option');
+const optionText = document.createTextNode(myArray[i]);
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute(myArray[i],myArray[i]);
+
+document.getElementById("city").appendChild(newOption);
+        
+      }
+
+
+    }
+		</script>
   <style>
       *,
 *::before,
