@@ -99,8 +99,9 @@ app.get("/otp/:email", function (req, res) {
   res.render("otp.ejs",{email:email});
 });
 
-app.get("/dealerDasboard", function (req, res) {
-  res.render("dealerDashboard.ejs");
+app.get("/dealerDasboard/:email", function (req, res) {
+  const email=req.params.email;
+  res.render("dealerDashboard.ejs",{email:email});
 });
 app.get("/driverDashboard", function (req, res) {
   res.render("Drivers_Dashboard.ejs",{dealers:dealers});

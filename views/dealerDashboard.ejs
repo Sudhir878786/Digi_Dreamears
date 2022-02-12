@@ -66,21 +66,21 @@
                                         <div class="d-flex">
                     <div class="form-group">
                         <label for="">From State</label>
-                        <input type="email" class="form-control" id="" placeholder="Maharastra">
+                        <input type="text" name="state1" onchange="search(this)" class="form-control" id="state1" placeholder="Maharastra">
                     </div>
                     <div class="form-group ml-5">
                         <label for="">To State</label>
-                        <input type="email" class="form-control" id="" placeholder="West Bengal">
+                        <input type="text" name="state2" class="form-control" id="state2" placeholder="West Bengal">
                     </div>
                     </div>
                                         <div class="d-flex">
                     <div class="form-group">
                         <label for="">From City</label>
-                        <input type="email" class="form-control" id="" placeholder="Mumbai">
+                        <input type="text" name="city1" class="form-control" id="city1" placeholder="Mumbai">
                     </div>
                     <div class="form-group ml-5">
                         <label for="">To City</label>
-                        <input type="email" class="form-control" id="" placeholder="Kolkata">
+                        <input type="text" name="city2" class="form-control" id="city2" placeholder="Kolkata">
                     </div>
                     </div>
                     
@@ -119,8 +119,19 @@
               </ul>
           </div>
       </div><!-- End -->
-      
+       <script>
+    function search(val) {
+        const s1=document.getElementById("state1");
+        const s2=document.getElementById("state2");
+        const c1=document.getElementById("city1");
+        const c2=document.getElementById("city2");
+
+        
+    }
+       
+    </script>
 <style>
+   
   /*
 *
 * ==========================================
