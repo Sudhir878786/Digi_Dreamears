@@ -199,6 +199,116 @@ background-image: url('img3.jpg');
 		  }
 		   
 	  </script>
+	  
+<script>
+var states=[];
+</script>
+
+<% for(var i=0; i<states.length; i++) { %>
+     
+        %>
+            
+    <script>
+        // console.log("<%=i%>");
+        states.push("<%=states[i].city%>");
+        
+        </script>
+       
+        <%}%>
+		<script>
+function onChangeTest2(changeVal) {
+        id=changeVal.value;
+		console.log(id);
+         while (document.getElementById("city1").options.length > 0) {
+        document.getElementById("city1").remove(0);
+    }   
+  
+    console.log(states);
+    const myArray = states[id].split(',');
+    console.log(myArray);
+     const newOption = document.createElement('option');
+const optionText = document.createTextNode("--Choose city 1--");
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute("null","");
+document.getElementById("city1").appendChild(newOption);
+    
+        for(var i=0;i<myArray.length;i++){
+            // console.log(i);
+            // console.log(states[id]);
+        const newOption = document.createElement('option');
+const optionText = document.createTextNode(myArray[i]);
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute(myArray[i],myArray[i]);
+document.getElementById("city1").appendChild(newOption);
+        
+      }
+    }
+function onChangeTest3(changeVal) {
+        id=changeVal.value;
+		console.log(id);
+         while (document.getElementById("city2").options.length > 0) {
+        document.getElementById("city2").remove(0);
+    }   
+  
+    console.log(states);
+    const myArray = states[id].split(',');
+    console.log(myArray);
+     const newOption = document.createElement('option');
+const optionText = document.createTextNode("--Choose city 2--");
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute("null","");
+document.getElementById("city2").appendChild(newOption);
+    
+        for(var i=0;i<myArray.length;i++){
+            // console.log(i);
+            // console.log(states[id]);
+        const newOption = document.createElement('option');
+const optionText = document.createTextNode(myArray[i]);
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute(myArray[i],myArray[i]);
+document.getElementById("city2").appendChild(newOption);
+        
+      }
+    }
+function onChangeTest4(changeVal) {
+        id=changeVal.value;
+		console.log(id);
+         while (document.getElementById("city3").options.length > 0) {
+        document.getElementById("city3").remove(0);
+    }   
+  
+    console.log(states);
+    const myArray = states[id].split(',');
+    console.log(myArray);
+     const newOption = document.createElement('option');
+const optionText = document.createTextNode("--Choose city 3--");
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute("null","");
+document.getElementById("city3").appendChild(newOption);
+    
+        for(var i=0;i<myArray.length;i++){
+            // console.log(i);
+            // console.log(states[id]);
+        const newOption = document.createElement('option');
+const optionText = document.createTextNode(myArray[i]);
+// set option text
+newOption.appendChild(optionText);
+// and option value
+newOption.setAttribute(myArray[i],myArray[i]);
+document.getElementById("city3").appendChild(newOption);
+        
+      }
+    }
 	  <style>
 		  *,
 	*::before,
