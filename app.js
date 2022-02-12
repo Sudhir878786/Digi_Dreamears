@@ -97,6 +97,19 @@ const detailschema = {
 
   };
   const Driver = mongoose.model("Driver" , detailschema);
+var drivers;
+const getListDrivers = async () => {
+  try {
+    const result = await Driver
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find();
+    // console.log(result);
+    drivers = result;
+  } catch (err) {
+    console.log(err);
+  }
+};
   
 var transporter = nodemailer.createTransport({
   service: '',
