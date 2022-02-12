@@ -83,13 +83,62 @@ background-image: url('img3.jpg');
 						<input id="signup-password" type="email" placeholder="E-mail" name="driver_email" required>
 				  <input id="signup-password" type="text" placeholder="Password" name="driver_password" required>
 				  <input id="signup-password" type="text" placeholder="Driving Experience(months)" name="driver_experience" required>
-			  </fieldset>
+			 
+
+			  <label for="prefered area" style="font-size: 17px; margin-left: 10px;  ">Choose your prefered area</label>
+			  <div style="display: flex;">
+
+			<select name="state" onchange="onChangeTest2(this)" id="states" >
+    <option value="">--Choose State 1--</option>
+     <% for(var i=0; i<states.length; i++) {%>
+  <option value=<%=i%>><%=states[i].state%></option>
+  <%}%>
+  
+</select>
+            <select id="city1" name="city"  id="city" >
+    <option value="">--Choose City 1--</option>
+    
+  
+  
+</select></div>
+			  <div style="display: flex;">
+
+			<select name="state" onchange="onChangeTest3(this)" id="states" >
+    <option value="">--Choose State 2--</option>
+     <% for(var i=0; i<states.length; i++) {%>
+  <option value=<%=i%>><%=states[i].state%></option>
+  <%}%>
+  
+</select>
+            <select id="city2" name="city"  id="city" >
+    <option value="">--Choose City 2--</option>
+    
+  
+  
+</select></div>
+			  <div style="display: flex;">
+
+			<select name="state" onchange="onChangeTest4(this)" id="states" >
+    <option value="">--Choose State 3--</option>
+     <% for(var i=0; i<states.length; i++) {%>
+  <option value=<%=i%>><%=states[i].state%></option>
+  <%}%>
+  
+</select>
+            <select id="city3" name="city"  id="city" >
+    <option value="">--Choose City 3--</option>
+    
+  
+  
+</select></div>
+          </fieldset>
 			  <button type="submit" class="btn-signup">Sign Up</button>
 			</form>
 		
 		  </div>
 		</div>
 	  </section>
+	</fieldset>
 
 	  
 	      <!-- Modal -->
@@ -436,6 +485,23 @@ background-image: url('img3.jpg');
 		box-shadow: inset 0 0 0 2px #a7e245;
 		transform: translateX(30%);
 	}
+	select{
+	display: block;
+	width: 100%;
+	margin-top: 8px;
+	padding-right: 15px;
+	padding-left: 15px;
+	font-size: 16px;
+	line-height: 20px;
+	height: 40px;
+	margin: 2px;
+	margin-top: 10px;
+	padding: 2px;
+	color: #3b4465;
+  background: #eef9fe;
+  border: 1px solid #cddbef;
+  border-radius: 2px;
+}
 	
 	  </style>
 
