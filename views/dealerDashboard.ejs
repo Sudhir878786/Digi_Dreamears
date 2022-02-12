@@ -66,21 +66,21 @@
                                         <div class="d-flex">
                     <div class="form-group">
                         <label for="">From State</label>
-                        <input type="text" name="state1" onchange="search(this)" class="form-control" id="state1" placeholder="Maharastra">
+                        <input type="text" name="state1"  onchange="search(this)" class="form-control" id="state1" placeholder="Maharastra">
                     </div>
                     <div class="form-group ml-5">
                         <label for="">To State</label>
-                        <input type="text" name="state2" class="form-control" id="state2" placeholder="West Bengal">
+                        <input type="text" name="state2" onchange="search(this)" class="form-control" id="state2" placeholder="West Bengal">
                     </div>
                     </div>
                                         <div class="d-flex">
                     <div class="form-group">
                         <label for="">From City</label>
-                        <input type="text" name="city1" class="form-control" id="city1" placeholder="Mumbai">
+                        <input type="text" name="city1" onchange="search(this)" class="form-control" id="city1" placeholder="Mumbai">
                     </div>
                     <div class="form-group ml-5">
                         <label for="">To City</label>
-                        <input type="text" name="city2" class="form-control" id="city2" placeholder="Kolkata">
+                        <input type="text" name="city2"onchange="search(this)"  class="form-control" id="city2" placeholder="Kolkata">
                     </div>
                     </div>
                     
@@ -102,32 +102,90 @@
   <div class="row text-center">
 
       <!-- Team item -->
-      <div class="col-xl-3 col-sm-6 mb-5">
+      <%for(var i=0;i<drivers.length;i++){%>
+      <div id="<%=i%>" class="col-xl-3 col-sm-6 mb-5">
           <div class="bg-white rounded shadow-sm py-5 px-4"><img src="https://th.bing.com/th?q=Auto+Driver+Logo&w=120&h=120&c=1&rs=1&qlt=90&cb=1&dpr=1.5&pid=InlineBlock&mkt=en-IN&cc=IN&setlang=en&adlt=strict&t=1&mw=247" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
-              <h5 class="mb-0">Driver name </h5><span class="small text-uppercase text-muted">Deatils</span>
-              <h6>Age</h6>
-              <h6>Truck Number</h6>
-              <h6>Truck Capacity</h6>
-              <h6>Transporter Name</h6>
-              <h6>Driving Experience</h6>
-              <h6>From state to state</h6>
-              <h6>From city to city</h6>
+              <h5 class="mb-0">Driver name: <%=drivers[i].driver_name%> </h5><span class="small text-uppercase text-muted">Deatils</span>
+              <h6>Age: <%=drivers[i].driver_age%></h6>
+              <h6>Truck Number: <%=drivers[i].driver_number%></h6>
+              <h6>Truck Capacity: <%=drivers[i].driver_truckcapacity%></h6>
+              <h6>Transporter Name: <%=drivers[i].driver_transportername%></h6>
+              <h6>Driving Experience: <%=drivers[i].driver_experience%></h6>
               <ul class="social mb-0 list-inline mt-3">
                 
                   <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-phone"></i></a></li>
                   <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-envelope"></i></a></li>
               </ul>
           </div>
-      </div><!-- End -->
-       <script>
-    function search(val) {
-        const s1=document.getElementById("state1");
-        const s2=document.getElementById("state2");
-        const c1=document.getElementById("city1");
-        const c2=document.getElementById("city2");
+      </div>
+      <%}%><!-- End -->
 
+      <script>
+          var drivers=[];
+          var name;
+          var age;
+          var number;
+        var trucknumber;
+        var truckcapacity;
+        var transportername;
+        var email;
+        var experience;
+        var s1,s2,c1,c2;
+          </script>
+      <!-- <%=email%>
+      <%=drivers%> -->
+      <%for(var i=0;i<drivers.length;i++){%>
+       <script> 
+        name="<%=drivers[i].driver_name%>";
+        age="<%=drivers[i].driver_age%>";
+    
+     number="<%=drivers[i].driver_number%>";
+      trucknumber="<%=drivers[i].driver_trucknumber%>";
+      truckcapacity="<%=drivers[i].driver_truckcapacity%>";
+      transportername="<%=drivers[i].driver_transportername%>";
+      email="<%=drivers[i].driver_email%>";
+      experience="<%=drivers[i].driver_experience%>";
+
+       drivers.push({  "name":name,
+           "age":age,
+           "number":number,
+         "trucknumber":trucknumber,
+         "truckcapacity":truckcapacity,
+         "transportername":transportername,
+         "email":email,
+         "experience":experience});
+       </script>
+
+        <%}%>
+
+
+       <script>
+
+          
+    function search(val) {
+        
+         s1=document.getElementById("state1").value;
+         s2=document.getElementById("state2").value;
+         c1=document.getElementById("city1").value;
+         c2=document.getElementById("city2").value;
+
+        if(s1=="" && s2=="" && c1=="" && c2==""){
+            
+            for(var i=0;i<drivers.length;i++){
+                document.getElementById(i).style.display="block";
+            }
+        }
+        else{
+            for(var i=0;i<drivers.length;i++){
+                document.getElementById(i).style.display="none";
+            }
+        }
+
+        // console.log(drivers);
+        // console.log(val.value);
         
     }
+    
        
     </script>
 <style>
