@@ -1,26 +1,23 @@
 <div class="container">
+  <% for(var i=0;i<dealers.length;i++){%>
   <div class="card">
     <div class="box">
       <div class="content">
-        <h2> 01</h2>
-        <h3>Name</h3>
-        <p>Details Here</p>
+        <h2> <%=i%></h2>
+        <p><b style="color: rgb(9, 255, 0);">Name:</b> <%=dealers[i].name%></p>
+        <p><b style="color: rgb(9, 255, 0);">mobile:</b> <%=dealers[i].mobile%></p>
+        <p><b style="color: rgb(9, 255, 0);">natureOfMaterial:</b> <%=dealers[i].natureOfMaterial%></p>
+        <p><b style="color: rgb(9, 255, 0);">weightOfMaterial:</b> <%=dealers[i].weightOfMaterial%></p>
+        <p><b style="color: rgb(9, 255, 0);">quantity:</b> <%=dealers[i].quantity%></p>
+        <p><b style="color: rgb(9, 255, 0);">state:</b> <%=dealers[i].state%></p>
+         <p><b style="color: rgb(9, 255, 0);">city:</b> <%=dealers[i].city%></p>
         <a href="#"> Contact</a>
       </div>
     </div>
   </div>
+  <%}%>
 
-  <div class="card">
-    <div class="box">
-      <div class="content">
-        <h2>02</h2>
-        <h3>Dealer 2</h3>
-        <p>Deatails</p>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-  </div>
-
+</div>
 
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap");
