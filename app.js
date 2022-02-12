@@ -43,8 +43,9 @@ const getList = async () => {
     console.log(err);
   }
 };
-
+var dealers;
 getList();
+
 
 
 
@@ -64,7 +65,20 @@ const dealerSchema = new mongoose.Schema({
 
 const dealerData = new mongoose.model("dealers", dealerSchema);
 
+const getListDealers = async () => {
+  try {
+    const result = await dealerData
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find();
+    // console.log(result);
+    dealers = result;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
+getListDealers();
 
 app.use(express.static(path.join(__dirname, "assets")));
 
@@ -77,7 +91,7 @@ app.get("/dealer", function (req, res) {
   res.render("Dealer.ejs",{status:0,states:states});
 });
 app.get("/driver", function (req, res) {
-  res.render("Driver.ejs");
+  res.render("Driver.ejs",{states:states});
 });
 
 app.get("/otp/:email", function (req, res) {
@@ -87,6 +101,9 @@ app.get("/otp/:email", function (req, res) {
 
 app.get("/dealerDasboard", function (req, res) {
   res.render("dealerDashboard.ejs");
+});
+app.get("/driverDashboard", function (req, res) {
+  res.render("Drivers_Dashboard.ejs",{dealers:dealers});
 });
 app.post("/dealerSignUp", async (req, res)=> {
 
