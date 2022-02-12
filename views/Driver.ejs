@@ -11,14 +11,14 @@
             <legend>Please, enter your email and password for login.</legend>
             <div class="input-block">
               
-              <input id="login-email" type="email" placeholder="Email" required>
+              <input id="login-email" onchange="onChangeTest(this)" type="email" placeholder="Email" required>
             
             <div class="input-block">
               
               <input id="login-password" type="password" placeholder="password" required>
             </div>
           </fieldset>
-          <button type="submit" class="btn-login" onclick="location.href='/otp'">Login</button>
+          <button type="submit" class="btn-login" onclick="gotoOtp()">Login</button>
         </form>
       </div>
       <div class="form-wrapper">
@@ -53,6 +53,19 @@
       </div>
     </div>
   </section>
+  
+  <script>
+	  var email="";
+	  function onChangeTest(changeVal) {
+        email=changeVal.value;
+		console.log(email);
+      }
+	  function gotoOtp(){
+		  var l="/otp/"+email;
+		  window.location.href=l;
+	  }
+	   
+  </script>
   <style>
       *,
 *::before,
