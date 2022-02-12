@@ -2,7 +2,7 @@
 <div class="container" id="container">
 	<div class="form-container sign-up-container">
         
-		<form action="#">
+		<form method="post" action="/dealerSignUp">
 			<h1>Create Account</h1>
 			<div class="social-container">
 				<a href="#" class="social"><i class="fab fa-facebook"></i></a>
@@ -10,15 +10,15 @@
 				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 			</div>
 			<span>or use your email for registration</span>
-			<input type="text" placeholder="Name" />
-            <input type="text"placeholder="Mobile Number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
-            <input type="email" placeholder="Nature of Material" />
-            <input type="text"placeholder="Weight of Material" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
-            <input type="email" placeholder="Quantity" />
-            <input type="email" placeholder="City" />
-            <input type="email" placeholder="State" />
-			<input type="email" placeholder="Email" />
-			<input type="text" placeholder ="Password" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" />
+			<input type="text" name="name" placeholder="Name" />
+            <input type="text" name="mobile" placeholder="Mobile Number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+            <input type="text" name="natureOfMaterial" placeholder="Nature of Material" />
+            <input type="text" name="weightOfMaterial" placeholder="Weight of Material" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" />
+            <input type="text" name="quantity" placeholder="Quantity" />
+            <input type="text" name="city" placeholder="City" />
+            <input type="text" name="state" placeholder="State" />
+			<input type="email" name="email" placeholder="Email" />
+			<input type="password" name="password" placeholder ="Password" pattern="/^[a-zA-Z0-9!@#\$%\^\&*_=+-]{8,12}$/g" />
 			<button>Sign Up</button>
 		</form>
 	</div>
@@ -54,6 +54,26 @@
 </div>
 
 <script>
+
+</script>
+<%if(status==200) {%>
+                <script>
+                    
+                    var al="Your email"+"<%result%>"+"registered Successfully\n";
+
+                    alert("registered");
+                </script>
+                <%}%>
+<%if(status==400) {%>
+                <script>
+                    alert("All feilds are required!!");
+                </script>
+                <%}%>
+<script>
+
+   
+
+
     const signUpButton = document.getElementById('signUp');
 const signInButton = document.getElementById('signIn');
 const container = document.getElementById('container');
