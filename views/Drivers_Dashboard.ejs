@@ -100,7 +100,7 @@
       <button class="btn btn-success"
       data-toggle=""
       data-target="">
-    Honme
+    Home
   </button>
 		</div>
         <!DOCTYPE html>
@@ -111,12 +111,78 @@
   
   <h1 class="center"></h1>
   <p class="center"></p>
-  <font face="Roboto" size="20px" color="#0000">Dealers Who have booked You</font>
+
   
   </body>
   </html>
   
+
+  <div class="container">
+    <h2 class="title">
+      <span class="title-word title-word-1">List of Dealers</span>
+      <span class="title-word title-word-2"> who have</span>
+      <span class="title-word title-word-3">booked</span>
+      <span class="title-word title-word-4">you.</span>
+    </h2>
+  </div>
   
+  
+  
+  <style>
+    .title-word {
+  animation: color-animation 4s linear infinite;
+}
+
+.title-word-1 {
+  --color-1: #DF8453;
+  --color-2: #3D8DAE;
+  --color-3: #E4A9A8;
+}
+
+.title-word-2 {
+  --color-1: #DBAD4A;
+  --color-2: #ACCFCB;
+  --color-3: #17494D;
+}
+
+.title-word-3 {
+  --color-1: #ACCFCB;
+  --color-2: #E4A9A8;
+  --color-3: #ACCFCB;
+}
+
+.title-word-4 {
+  --color-1: #3D8DAE;
+  --color-2: #DF8453;
+  --color-3: #E4A9A8;
+}
+
+@keyframes color-animation {
+  0%    {color: var(--color-1)}
+  32%   {color: var(--color-1)}
+  33%   {color: var(--color-2)}
+  65%   {color: var(--color-2)}
+  66%   {color: var(--color-3)}
+  99%   {color: var(--color-3)}
+  100%  {color: var(--color-1)}
+}
+
+/* Here are just some visual styles. 🖌 */
+
+.container {
+  display: grid;
+  place-items: center;  
+  text-align: center;
+  height: 80vh
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 2.5vw;
+  text-transform: uppercase;
+}
+  </style>
   
   <div class="container">
 
