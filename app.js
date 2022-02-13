@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const session = require("express-session");
+
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
 var nodemailer = require("nodemailer");
@@ -16,6 +18,13 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.use(cors());
 app.use(express.json());
+app.use(session({ secret: "ssshhhhh", saveUninitialized: true, resave: true }));
+
+const router=express.Router();
+
+var sessionId;
+var btn;
+
 var driver_name;
 
 var driver_age;
@@ -26,6 +35,7 @@ var driver_transportername;
 var driver_email;
 var driver_password;
 var driver_experience;
+var dealer_email;
 var otp;
 var email4;
 
@@ -53,6 +63,7 @@ const detailschema = {
   driver_truckcapacity: String,
   driver_transportername: String,
   driver_email: String,
+  dealer_email: String,
   driver_password: String,
   driver_experience: String,
   state1: String,
@@ -64,7 +75,9 @@ const detailschema = {
   // companypassword:String,
 };
 const Driver = mongoose.model("Driver", detailschema);
-var drivers;
+const Driver2 = mongoose.model("Driver2", detailschema);
+var drivers=[];
+var fdealers=[];
 const getListDrivers = async () => {
   try {
     const result = await Driver
@@ -99,7 +112,7 @@ var transporter = nodemailer.createTransport({
 });
 
 const stateTable = new mongoose.model("stateTable", listSchema);
-var states;
+var states=[];
 const getList = async () => {
   try {
     const result = await stateTable
@@ -128,7 +141,7 @@ const dealerSchema = new mongoose.Schema({
 });
 
 const dealerData = new mongoose.model("dealers", dealerSchema);
-var dealers;
+var dealers=[];
 const getListDealers = async () => {
   try {
     const result = await dealerData
@@ -145,13 +158,11 @@ const getListDealers = async () => {
 getListDealers();
 app.use(express.static(path.join(__dirname, "assets")));
 
-app.get("/", function (req, res) {
+router.get("/", function (req, res) {
   res.render("index.ejs");
 });
-app.get("/driver", function (req, res) {
-  res.render("Driver.ejs", { states: states });
-});
-app.post("/otp", function (req, res) {
+
+router.post("/otp", function (req, res) {
   // const email=req.params.email;
   var rotp1 = req.body.otp1;
   var rotp2 = req.body.otp2;
@@ -159,30 +170,42 @@ app.post("/otp", function (req, res) {
   var rotp4 = req.body.otp4;
   var final = rotp1+rotp2+rotp3+rotp4;
   if(final==otp){
-    res.redirect("/driverDashboard")
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDriverEmail;
+    sessionId.isDriver=true;
+    sessionId.isDealer=false;
+    res.redirect("/driverDashboard/"+sessionId.tempDriverEmail)
   }
   
 });
-app.get("/dealer", function (req, res) {
+router.get("/dealer", function (req, res) {
+  sessionId = req.session;
+  if (sessionId.email && sessionId.isDealer==true) {
+    return res.redirect("/dealerDasboard/"+sessionId.email);
+  }
   res.render("Dealer.ejs", { status: 0, states: states });
 });
-app.get("/driver", function (req, res) {
+router.get("/driver", function (req, res) {
+  sessionId = req.session;
+  if (sessionId.email && sessionId.isDriver == true) {
+    return res.redirect("/driverDashboard/"+sessionId.email);
+  }
   res.render("Driver.ejs",{states: states });
 });
-app.get("/dealer2", function (req, res) {});
-app.post("/dealer2", function (req, res) {
+router.get("/dealer2", function (req, res) {});
+router.post("/dealer2", function (req, res) {
   res.redirect("/otp3");
 });
 
-app.get("/otp", function (req, res) {
+router.get("/otp", function (req, res) {
   // const email=req.params.email;
   res.render("otp.ejs");
 });
-app.get("/otp3", function (req, res) {
+router.get("/otp3", function (req, res) {
   res.render("otp3.ejs");
 });
 
-app.post("/otp4", function (req, res) {
+router.post("/otp4", function (req, res) {
   // const email=req.params.email;
   // var email = req.body.email;
   var rotp1 = req.body.otp1;
@@ -192,10 +215,14 @@ app.post("/otp4", function (req, res) {
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
     // res.redirect(/dealerDashboard/email4);
-    res.redirect("/driverDashboard");
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDriverEmail;
+    sessionId.isDriver=true;
+    sessionId.isDealer=false;
+    res.redirect("/driverDashboard/"+sessionId.email);
   }
 });
-app.post("/otp3", function (req, res) {
+router.post("/otp3", function (req, res) {
   // const email=req.params.email;
   // var email = req.body.email;
   var rotp1 = req.body.otp1;
@@ -205,13 +232,23 @@ app.post("/otp3", function (req, res) {
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
     console.log(email4+"lait")
-     res.redirect("dealerDasboard/"+email4);
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDealerEmail;
+    sessionId.isDealer=true;
+    sessionId.isDriver=false;
+    //  res.redirect("dealerDasboard/"+email4);
+     res.redirect("/dealerDasboard/"+sessionId.email);
   }
 });
 var are;
 var dealerState;
 var dealerCity;
-app.get("/dealerDasboard/:email", async (req, res) =>{
+router.get("/dealerDasboard/:email", async (req, res) =>{
+
+   sessionId = req.session;
+   if (!sessionId.email) {
+     return res.redirect("/");
+   }
   const email = req.params.email;
   try {
     const result = await dealerData
@@ -260,7 +297,11 @@ app.get("/dealerDasboard/:email", async (req, res) =>{
   res.render("dealerDashboard.ejs", { email: email, drivers: drivers,states:states,td:tempDrivers});
 });
 var dealerCity;
-app.post("/filterDealer/:email", async (req, res) =>{
+router.post("/filterDealer/:email", async (req, res) =>{
+  sessionId = req.session;
+  if (!sessionId.email) {
+    return res.redirect("/");
+  }
   const s1=req.body.state1;
   const s2=req.body.state2;
   const c1=req.body.city1;
@@ -337,21 +378,52 @@ app.post("/filterDealer/:email", async (req, res) =>{
   //  console.log(tempDrivers);
   res.render("dealerDashboard.ejs", { email: email, drivers: drivers,states:states,td:tempDrivers});
 });
-app.get("/driverDashboard", async (req, res) =>{
+router.get("/driverDashboard/:email", async (req, res) =>{
+  const email=req.params.email;
+  console.log(email);
+  sessionId = req.session;
+  if (!sessionId.email) {
+    return res.redirect("/");
+  }
+  
   try {
-    const result = await dealerData
+    const result = await Driver2
       // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
       // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
-      .find();
+      .find({driver_email:email});
     // console.log(result);
-    dealers = result;
+    fdealers = result;
   } catch (err) {
     console.log(err);
   }
+  console.log(fdealers);
+  dealers=[];
+ for (var key in fdealers) {
+   if (fdealers.hasOwnProperty(key)) {
+     var dealer_e=(fdealers[key].dealer_email);
+    var dealer2;
+     console.log("ff" + dealer_e);
+     try {
+       const result = await dealerData
+         // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+         // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+         .find({ email: dealer_e });
+       // console.log(result);
+       dealer2 = result;
+     } catch (err) {
+       console.log(err);
+     }
+     if(dealer2[0]){
+     dealers.push(dealer2[0]);
+     }
+   }
+ }
+  
+  console.log(dealers);
   res.render("Drivers_Dashboard.ejs", { dealers: dealers });
 });
 
-app.post("/dealerSignUp", async (req, res) => {
+router.post("/dealerSignUp", async (req, res) => {
   const name = req.body.name;
   const mobile = req.body.mobile;
   const natureOfMaterial = req.body.natureOfMaterial;
@@ -389,11 +461,12 @@ app.post("/dealerSignUp", async (req, res) => {
     res.render("Dealer.ejs", { status: 300, email: email, states: states });
   }
 });
-app.post("/driver_login3", function (req, res) {
+router.post("/driver_login3", function (req, res) {
   var email = req.body.email;
   otp = Math.floor(1000 + Math.random() * 9000);
   var otp2 = otp.toString();
-
+  sessionId = req.session;
+  sessionId.tempDriverEmail=email;
   var transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
@@ -420,11 +493,12 @@ app.post("/driver_login3", function (req, res) {
   });
   res.redirect("/otp3");
 });
-app.post("/dealer_login3", function (req, res) {
+router.post("/dealer_login3", function (req, res) {
    email4 = req.body.email;
   otp = Math.floor(1000 + Math.random() * 9000);
   var otp2 = otp.toString();
-
+  sessionId = req.session;
+  sessionId.tempDealerEmail=email4;
   var transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
@@ -452,30 +526,98 @@ app.post("/dealer_login3", function (req, res) {
   res.redirect("/otp");
 });
 
-app.post("/driver_login2", function (req, res) {
+router.post("/driver_login2", async (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
-  Driver.find({}, function (err, founditem) {
-    if (err) {
-      console.log(err);
-    } else {
-      // console.log(item1);
+  try {
+    const result = await Driver
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find();
+    //  console.log(result);
 
-      founditem.forEach(function (found) {
-        if (
-          username === found.driver_name &&
-          password === found.driver_password
-        ) {
-          res.redirect("/driver_login");
-        }
+    drivers = result;
+  } catch (err) {
+    console.log("err");
+    console.log(err);
+  }
+  // console.log(drivers);
+  var f=0;
+  for (var key in drivers) {
+    if (drivers.hasOwnProperty(key)) {
+      
+      // console.log(drivers[key].driver_name);
 
-        //  console.log(found.clientn);
-      });
+      if(drivers[key].driver_name==username && drivers[key].driver_password==password){
+        console.log(drivers[key].driver_name);
+        console.log(drivers[key].driver_password);
+        sessionId=req.session;
+        sessionId["email"] = drivers[key].driver_email;
+        sessionId["isDriver"]=true;
+        f=1;
+        break;
+      }
+
     }
-  });
+  }
+    if(f==1){
+      res.redirect("/driverDashboard/"+sessionId.email);
+    }
+    else{
+      res.redirect("/driver");
+    }
+  
+
+  
 });
-app.post("/driver", function (req, res) {
+
+router.post("/dealer_login2", async (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  try {
+    const result = await dealerData
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find({name:username,password:password});
+    //  console.log(result);
+
+    dealers = result;
+  } catch (err) {
+    console.log("err");
+    console.log(err);
+  }
+  console.log(dealers[0]);
+  
+    if(dealers[0]){
+      sessionId=req.session;
+      sessionId["email"]=dealers[0]["email"];
+      sessionId.isDealer=true;
+      sessionId.isDriver=false;
+      res.redirect("/dealerDasboard/"+sessionId.email);
+    }
+    else{
+      res.redirect("/dealer");
+    }
+
+
+  
+});
+
+router.get("/logOut", function (req, res) {
+sessionId = req.session;
+sessionId.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+        res.redirect('/');
+    });
+
+
+});
+
+router.post("/driver", function (req, res) {
   driver_name = req.body.driver_name;
   driver_age = req.body.driver_age;
   driver_number = req.body.driver_number;
@@ -514,10 +656,30 @@ app.post("/driver", function (req, res) {
   driver.save();
   res.render("Driver.ejs",{states:states});
 });
-app.get("/otp", function (req, res) {
+router.get("/otp", function (req, res) {
   const email = req.params.email;
   res.render("otp.ejs", { email: email });
 });
+router.post("/btn", function (req, res) {
+  btn = req.body.btn;
+
+  sessionId = req.session;
+  var dealerEmail = sessionId.email;
+
+  const driver1 = new Driver2({
+    driver_email: btn,
+    dealer_email: dealerEmail,
+  });
+  driver1.save();
+  change = "b";
+  res.redirect("/dealerDasboard/"+dealerEmail);
+
+  // console.log(btn+"this is btn");
+});
+router.get("*", function (req, res) {
+  res.render("404");
+});
+app.use("/", router);
 
 app.listen(port, () => {
   console.log("done");
