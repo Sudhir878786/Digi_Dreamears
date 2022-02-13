@@ -1,17 +1,20 @@
 <div class="container">
+  
   <% for(var i=0;i<dealers.length;i++){%>
   <div class="card">
     <div class="box">
-      <div class="content">
-        <h2> <%=i%></h2>
-        <p><b style="color: rgb(9, 255, 0);">Name:</b> <%=dealers[i].name%></p>
-        <p><b style="color: rgb(9, 255, 0);">mobile:</b> <%=dealers[i].mobile%></p>
-        <p><b style="color: rgb(9, 255, 0);">natureOfMaterial:</b> <%=dealers[i].natureOfMaterial%></p>
-        <p><b style="color: rgb(9, 255, 0);">weightOfMaterial:</b> <%=dealers[i].weightOfMaterial%></p>
-        <p><b style="color: rgb(9, 255, 0);">quantity:</b> <%=dealers[i].quantity%></p>
-        <p><b style="color: rgb(9, 255, 0);">state:</b> <%=dealers[i].state%></p>
-         <p><b style="color: rgb(9, 255, 0);">city:</b> <%=dealers[i].city%></p>
-        <a href="#"> Contact</a>
+      <div class="container"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1XvbvyjY53_0Ntf3v7ePV1rxu1tfDx3S-1w&usqp=CAU" alt="" width="90" >
+        
+        
+        <p><b style="color: rgb(206, 104, 109);">Name:</b> <%=dealers[i].name%></p>
+        <p><b style="color: rgb(190, 84, 84);">mobile:</b> <%=dealers[i].mobile%></p>
+        <p><b style="color: rgb(190, 84, 84);">natureOfMaterial:</b> <%=dealers[i].natureOfMaterial%></p>
+        <p><b style="color: rgb(190, 84, 84);">weightOfMaterial:</b> <%=dealers[i].weightOfMaterial%></p>
+        <p><b style="color: rgb(190, 84, 84);">quantity:</b> <%=dealers[i].quantity%></p>
+        <p><b style="color: rgb(190, 84, 84);">state:</b> <%=dealers[i].state%></p>
+         <p><b style="color: rgb(190, 84, 84);">city:</b> <%=dealers[i].city%></p>
+         <p><b style="color: rgb(190, 84, 84);">city:</b> <%=dealers[i].email%></p>
+        <a href="<%=dealers[i].email%>"> Contact</a>
       </div>
     </div>
   </div>
@@ -34,7 +37,7 @@ body {
   align-items: center;
   flex-wrap: wrap;
   min-height: 100vh;
-  background: #232427;
+  background: #222335;
 }
 
 body .container {
@@ -50,8 +53,8 @@ body .container .card {
   position: relative;
   min-width: 320px;
   height: 440px;
-  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.2),
-    inset -5px -5px 15px rgba(255, 255, 255, 0.1),
+  box-shadow: inset 5px 5px 5px rgba(61, 49, 61, 0.2),
+    inset -5px -5px 15px rgba(129, 84, 84, 0.1),
     5px 5px 15px rgba(0, 0, 0, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   margin: 30px;
@@ -76,7 +79,7 @@ body .container .card .box {
   left: 20px;
   right: 20px;
   bottom: 20px;
-  background: #2a2b2f;
+  background: #428a4617;
   border-radius: 15px;
   display: flex;
   justify-content: center;
@@ -96,7 +99,7 @@ body .container .card .box:before {
   left: 0;
   width: 50%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(107, 165, 219, 0.03);
 }
 
 body .container .card .box .content {
