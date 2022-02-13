@@ -1,10 +1,10 @@
 <body>
     <ul>
-      <li><a onclick="location.href='/index.ejs'"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+      <li><a onclick="location.href='/'"><i class="fa fa-home" aria-hidden="true"></i></a></li>
       <li><a href="#"><i class="fa fa-bus" aria-hidden="true"></i></a></li>
       <li class="active"><a href="#"><i class="fa fa-drivers-license" aria-hidden="true"></i></a></li>
       <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
-      <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+      <li><a href="/logOut"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
       <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a></li>
     </ul>
     
@@ -22,8 +22,8 @@ body{
   background: #222;
 }
 ul{
-  background: #333;
-  min-width: 30px;
+  background: rgb(128, 103, 103);
+  min-width: 80px;
   height: 2657px;
   box-sizing: border-box;
   position: fixed;
@@ -42,11 +42,11 @@ a{
   padding: 10px 10px;
 }
 li.active{
-  background: #222;
+  background: rgb(53, 49, 49);
   opacity: 1;
 }
 li:not(.active):hover {
-  background: #2c2c2c;
+  background: #635b5b;
 }
 img{
   width: 30px;
@@ -219,8 +219,11 @@ li:hover img, .active img{
               <h6>Visiting city 1: <%=td[i].city1%></h6>
               <h6>Visiting city 2: <%=td[i].city2%></h6>
               <h6>Visiting city 3: <%=td[i].city3%></h6>
+                <form action ='/btn' method ='post'>
+                    <button type='submit' onclick="myfunction()"  name='btn' class ='btn' value='<%=td[i].driver_email%>'>Book Know</button>
+                  </form>
               <ul class="social mb-0 list-inline mt-3">
-                
+                   
                   <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-phone"></i></a></li>
                   <li class="list-inline-item"><a href="#" class="social-link"><i class="fa fa-envelope"></i></a></li>
               </ul>
@@ -268,7 +271,14 @@ body {
       
   </div>
 </div>
+    <script>
+    function myfunction(){
+        alert('successfully Booked');
+    }
     
+    
+</script>
+
 </body>
 </html>
 
