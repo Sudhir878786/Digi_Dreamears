@@ -73,7 +73,7 @@ const detailschema = {
   // companypassword:String,
 };
 const Driver = mongoose.model("Driver", detailschema);
-var drivers;
+var drivers=[];
 const getListDrivers = async () => {
   try {
     const result = await Driver
@@ -108,7 +108,7 @@ var transporter = nodemailer.createTransport({
 });
 
 const stateTable = new mongoose.model("stateTable", listSchema);
-var states;
+var states=[];
 const getList = async () => {
   try {
     const result = await stateTable
@@ -137,7 +137,7 @@ const dealerSchema = new mongoose.Schema({
 });
 
 const dealerData = new mongoose.model("dealers", dealerSchema);
-var dealers;
+var dealers=[];
 const getListDealers = async () => {
   try {
     const result = await dealerData
@@ -492,28 +492,82 @@ router.post("/dealer_login3", function (req, res) {
   res.redirect("/otp");
 });
 
-router.post("/driver_login2", function (req, res) {
+router.post("/driver_login2", async (req, res) => {
   var username = req.body.username;
   var password = req.body.password;
 
-  Driver.find({}, function (err, founditem) {
-    if (err) {
-      console.log(err);
-    } else {
-      // console.log(item1);
+  try {
+    const result = await Driver
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find();
+    //  console.log(result);
 
-      founditem.forEach(function (found) {
-        if (
-          username === found.driver_name &&
-          password === found.driver_password
-        ) {
-          res.redirect("/driver_login");
-        }
+    drivers = result;
+  } catch (err) {
+    console.log("err");
+    console.log(err);
+  }
+  // console.log(drivers);
+  var f=0;
+  for (var key in drivers) {
+    if (drivers.hasOwnProperty(key)) {
+      
+      // console.log(drivers[key].driver_name);
 
-        //  console.log(found.clientn);
-      });
+      if(drivers[key].driver_name==username && drivers[key].driver_password==password){
+        console.log(drivers[key].driver_name);
+        console.log(drivers[key].driver_password);
+        sessionId=req.session;
+        sessionId["email"] = drivers[key].driver_email;
+        sessionId["isDriver"]=true;
+        f=1;
+        break;
+      }
+
     }
-  });
+  }
+    if(f==1){
+      res.redirect("/driverDashboard/"+sessionId.email);
+    }
+    else{
+      res.redirect("/driver");
+    }
+  
+
+  
+});
+
+router.post("/dealer_login2", async (req, res) => {
+  var username = req.body.username;
+  var password = req.body.password;
+
+  try {
+    const result = await dealerData
+      // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
+      // .find({$or:[{name:"anshu"},{number:{$gt:21}}]})
+      .find({name:username,password:password});
+    //  console.log(result);
+
+    dealers = result;
+  } catch (err) {
+    console.log("err");
+    console.log(err);
+  }
+  console.log(dealers[0]);
+  
+    if(dealers[0]){
+      sessionId=req.session;
+      sessionId["email"]=dealers[0]["email"];
+      sessionId.isDealer=true;
+      res.redirect("/dealerDasboard/"+sessionId.email);
+    }
+    else{
+      res.redirect("/dealer");
+    }
+  
+
+  
 });
 router.post("/driver", function (req, res) {
   driver_name = req.body.driver_name;
