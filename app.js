@@ -27,6 +27,7 @@ var driver_email;
 var driver_password;
 var driver_experience;
 var otp;
+var email4;
 
 mongoose
   .connect(
@@ -145,6 +146,9 @@ getListDealers();
 app.use(express.static(path.join(__dirname, "assets")));
 
 app.get("/", function (req, res) {
+  res.render("index.ejs");
+});
+app.get("/driver", function (req, res) {
   res.render("Driver.ejs", { states: states });
 });
 app.post("/otp", function (req, res) {
@@ -155,7 +159,7 @@ app.post("/otp", function (req, res) {
   var rotp4 = req.body.otp4;
   var final = rotp1+rotp2+rotp3+rotp4;
   if(final==otp){
-    console.log('correct');
+    res.redirect("/driverDashboard")
   }
   
 });
@@ -178,26 +182,30 @@ app.get("/otp3", function (req, res) {
   res.render("otp3.ejs");
 });
 
-app.post("/otp", function (req, res) {
+app.post("/otp4", function (req, res) {
   // const email=req.params.email;
+  // var email = req.body.email;
   var rotp1 = req.body.otp1;
   var rotp2 = req.body.otp2;
   var rotp3 = req.body.otp3;
   var rotp4 = req.body.otp4;
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
-    console.log("correct");
+    // res.redirect(/dealerDashboard/email4);
+    res.redirect("/driverDashboard");
   }
 });
 app.post("/otp3", function (req, res) {
   // const email=req.params.email;
+  // var email = req.body.email;
   var rotp1 = req.body.otp1;
   var rotp2 = req.body.otp2;
   var rotp3 = req.body.otp3;
   var rotp4 = req.body.otp4;
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
-    console.log("correct");
+    console.log(email4+"lait")
+     res.redirect("dealerDasboard/"+email4);
   }
 });
 var are;
@@ -410,10 +418,10 @@ app.post("/driver_login3", function (req, res) {
       console.log("Email sent: " + info.response);
     }
   });
-  res.redirect("/otp");
+  res.redirect("/otp3");
 });
 app.post("/dealer_login3", function (req, res) {
-  var email = req.body.email;
+   email4 = req.body.email;
   otp = Math.floor(1000 + Math.random() * 9000);
   var otp2 = otp.toString();
 
@@ -429,7 +437,7 @@ app.post("/dealer_login3", function (req, res) {
   );
   var mailOptions = {
     from: "kapilmehta634@gmail.com",
-    to: email,
+    to: email4,
     subject: "OTP",
     text: "OTP = " + otp2,
   };
