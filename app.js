@@ -173,6 +173,7 @@ router.post("/otp", function (req, res) {
     sessionId = req.session;
     sessionId.email=sessionId.tempDriverEmail;
     sessionId.isDriver=true;
+    sessionId.isDealer=false;
     res.redirect("/driverDashboard/"+sessionId.tempDriverEmail)
   }
   
@@ -217,6 +218,7 @@ router.post("/otp4", function (req, res) {
     sessionId = req.session;
     sessionId.email=sessionId.tempDriverEmail;
     sessionId.isDriver=true;
+    sessionId.isDealer=false;
     res.redirect("/driverDashboard/"+sessionId.email);
   }
 });
@@ -233,6 +235,7 @@ router.post("/otp3", function (req, res) {
     sessionId = req.session;
     sessionId.email=sessionId.tempDealerEmail;
     sessionId.isDealer=true;
+    sessionId.isDriver=false;
     //  res.redirect("dealerDasboard/"+email4);
      res.redirect("/dealerDasboard/"+sessionId.email);
   }
@@ -591,6 +594,7 @@ router.post("/dealer_login2", async (req, res) => {
       sessionId=req.session;
       sessionId["email"]=dealers[0]["email"];
       sessionId.isDealer=true;
+      sessionId.isDriver=false;
       res.redirect("/dealerDasboard/"+sessionId.email);
     }
     else{
