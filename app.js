@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const session = require("express-session");
+
 const mongoose = require("mongoose");
 const port = process.env.PORT || 8000;
 var nodemailer = require("nodemailer");
@@ -16,6 +18,13 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.use(cors());
 app.use(express.json());
+app.use(session({ secret: "ssshhhhh", saveUninitialized: true, resave: true }));
+
+const router=express.Router();
+
+var sessionId;
+
+
 var driver_name;
 
 var driver_age;
@@ -145,13 +154,11 @@ const getListDealers = async () => {
 getListDealers();
 app.use(express.static(path.join(__dirname, "assets")));
 
-app.get("/", function (req, res) {
+router.get("/", function (req, res) {
   res.render("index.ejs");
 });
-app.get("/driver", function (req, res) {
-  res.render("Driver.ejs", { states: states });
-});
-app.post("/otp", function (req, res) {
+
+router.post("/otp", function (req, res) {
   // const email=req.params.email;
   var rotp1 = req.body.otp1;
   var rotp2 = req.body.otp2;
@@ -159,30 +166,41 @@ app.post("/otp", function (req, res) {
   var rotp4 = req.body.otp4;
   var final = rotp1+rotp2+rotp3+rotp4;
   if(final==otp){
-    res.redirect("/driverDashboard")
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDriverEmail;
+    sessionId.isDriver=true;
+    res.redirect("/driverDashboard/"+sessionId.tempDriverEmail)
   }
   
 });
-app.get("/dealer", function (req, res) {
+router.get("/dealer", function (req, res) {
+  sessionId = req.session;
+  if (sessionId.email && sessionId.isDealer==true) {
+    return res.redirect("/dealerDasboard/"+sessionId.email);
+  }
   res.render("Dealer.ejs", { status: 0, states: states });
 });
-app.get("/driver", function (req, res) {
+router.get("/driver", function (req, res) {
+  sessionId = req.session;
+  if (sessionId.email && sessionId.isDriver == true) {
+    return res.redirect("/driverDashboard/"+sessionId.email);
+  }
   res.render("Driver.ejs",{states: states });
 });
-app.get("/dealer2", function (req, res) {});
-app.post("/dealer2", function (req, res) {
+router.get("/dealer2", function (req, res) {});
+router.post("/dealer2", function (req, res) {
   res.redirect("/otp3");
 });
 
-app.get("/otp", function (req, res) {
+router.get("/otp", function (req, res) {
   // const email=req.params.email;
   res.render("otp.ejs");
 });
-app.get("/otp3", function (req, res) {
+router.get("/otp3", function (req, res) {
   res.render("otp3.ejs");
 });
 
-app.post("/otp4", function (req, res) {
+router.post("/otp4", function (req, res) {
   // const email=req.params.email;
   // var email = req.body.email;
   var rotp1 = req.body.otp1;
@@ -192,10 +210,13 @@ app.post("/otp4", function (req, res) {
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
     // res.redirect(/dealerDashboard/email4);
-    res.redirect("/driverDashboard");
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDriverEmail;
+    sessionId.isDriver=true;
+    res.redirect("/driverDashboard/"+sessionId.email);
   }
 });
-app.post("/otp3", function (req, res) {
+router.post("/otp3", function (req, res) {
   // const email=req.params.email;
   // var email = req.body.email;
   var rotp1 = req.body.otp1;
@@ -205,13 +226,22 @@ app.post("/otp3", function (req, res) {
   var final = rotp1 + rotp2 + rotp3 + rotp4;
   if (final == otp) {
     console.log(email4+"lait")
-     res.redirect("dealerDasboard/"+email4);
+    sessionId = req.session;
+    sessionId.email=sessionId.tempDealerEmail;
+    sessionId.isDealer=true;
+    //  res.redirect("dealerDasboard/"+email4);
+     res.redirect("/dealerDasboard/"+sessionId.email);
   }
 });
 var are;
 var dealerState;
 var dealerCity;
-app.get("/dealerDasboard/:email", async (req, res) =>{
+router.get("/dealerDasboard/:email", async (req, res) =>{
+
+   sessionId = req.session;
+   if (!sessionId.email) {
+     return res.redirect("/");
+   }
   const email = req.params.email;
   try {
     const result = await dealerData
@@ -260,7 +290,11 @@ app.get("/dealerDasboard/:email", async (req, res) =>{
   res.render("dealerDashboard.ejs", { email: email, drivers: drivers,states:states,td:tempDrivers});
 });
 var dealerCity;
-app.post("/filterDealer/:email", async (req, res) =>{
+router.post("/filterDealer/:email", async (req, res) =>{
+  sessionId = req.session;
+  if (!sessionId.email) {
+    return res.redirect("/");
+  }
   const s1=req.body.state1;
   const s2=req.body.state2;
   const c1=req.body.city1;
@@ -337,7 +371,11 @@ app.post("/filterDealer/:email", async (req, res) =>{
   //  console.log(tempDrivers);
   res.render("dealerDashboard.ejs", { email: email, drivers: drivers,states:states,td:tempDrivers});
 });
-app.get("/driverDashboard", async (req, res) =>{
+router.get("/driverDashboard/:email", async (req, res) =>{
+  sessionId = req.session;
+  if (!sessionId.email) {
+    return res.redirect("/");
+  }
   try {
     const result = await dealerData
       // .find({name:{$in:["anshu","ankit"]},number:{$gt:21}})
@@ -351,7 +389,7 @@ app.get("/driverDashboard", async (req, res) =>{
   res.render("Drivers_Dashboard.ejs", { dealers: dealers });
 });
 
-app.post("/dealerSignUp", async (req, res) => {
+router.post("/dealerSignUp", async (req, res) => {
   const name = req.body.name;
   const mobile = req.body.mobile;
   const natureOfMaterial = req.body.natureOfMaterial;
@@ -389,11 +427,12 @@ app.post("/dealerSignUp", async (req, res) => {
     res.render("Dealer.ejs", { status: 300, email: email, states: states });
   }
 });
-app.post("/driver_login3", function (req, res) {
+router.post("/driver_login3", function (req, res) {
   var email = req.body.email;
   otp = Math.floor(1000 + Math.random() * 9000);
   var otp2 = otp.toString();
-
+  sessionId = req.session;
+  sessionId.tempDriverEmail=email;
   var transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
@@ -420,11 +459,12 @@ app.post("/driver_login3", function (req, res) {
   });
   res.redirect("/otp3");
 });
-app.post("/dealer_login3", function (req, res) {
+router.post("/dealer_login3", function (req, res) {
    email4 = req.body.email;
   otp = Math.floor(1000 + Math.random() * 9000);
   var otp2 = otp.toString();
-
+  sessionId = req.session;
+  sessionId.tempDealerEmail=email4;
   var transporter = nodemailer.createTransport(
     smtpTransport({
       service: "gmail",
@@ -452,7 +492,7 @@ app.post("/dealer_login3", function (req, res) {
   res.redirect("/otp");
 });
 
-app.post("/driver_login2", function (req, res) {
+router.post("/driver_login2", function (req, res) {
   var username = req.body.username;
   var password = req.body.password;
 
@@ -475,7 +515,7 @@ app.post("/driver_login2", function (req, res) {
     }
   });
 });
-app.post("/driver", function (req, res) {
+router.post("/driver", function (req, res) {
   driver_name = req.body.driver_name;
   driver_age = req.body.driver_age;
   driver_number = req.body.driver_number;
@@ -514,10 +554,14 @@ app.post("/driver", function (req, res) {
   driver.save();
   res.render("Driver.ejs",{states:states});
 });
-app.get("/otp", function (req, res) {
+router.get("/otp", function (req, res) {
   const email = req.params.email;
   res.render("otp.ejs", { email: email });
 });
+router.get("*", function (req, res) {
+  res.render("404");
+});
+app.use("/", router);
 
 app.listen(port, () => {
   console.log("done");
