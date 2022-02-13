@@ -687,6 +687,6 @@ router.get("*", function (req, res) {
 });
 app.use("/", router);
 
-app.listen(port, () => {
-  console.log("done");
+app.listen(process.env.PORT|| 8000,function () {
+  console.log("server is running on port 8000");
 });
