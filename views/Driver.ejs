@@ -88,14 +88,14 @@ background-image: url('img3.jpg');
 			  <label for="prefered area" style="font-size: 17px; margin-left: 10px;  ">Choose your prefered area</label>
 			  <div style="display: flex;">
 
-			<select name="state" onchange="onChangeTest2(this)" id="states" >
+			<select name="state1" onchange="onChangeTest2(this)" id="states" >
     <option value="">--Choose State 1--</option>
      <% for(var i=0; i<states.length; i++) {%>
-  <option value=<%=i%>><%=states[i].state%></option>
+  <option  value=<%=i%> ><%=states[i].state%></option>
   <%}%>
   
 </select>
-            <select id="city1" name="city"  id="city" >
+            <select id="city1" name="city1"   >
     <option value="">--Choose City 1--</option>
     
   
@@ -103,14 +103,14 @@ background-image: url('img3.jpg');
 </select></div>
 			  <div style="display: flex;">
 
-			<select name="state" onchange="onChangeTest3(this)" id="states" >
+			<select name="state2" onchange="onChangeTest3(this)" id="states" >
     <option value="">--Choose State 2--</option>
      <% for(var i=0; i<states.length; i++) {%>
   <option value=<%=i%>><%=states[i].state%></option>
   <%}%>
   
 </select>
-            <select id="city2" name="city"  id="city" >
+            <select id="city2" name="city2" >
     <option value="">--Choose City 2--</option>
     
   
@@ -118,14 +118,14 @@ background-image: url('img3.jpg');
 </select></div>
 			  <div style="display: flex;">
 
-			<select name="state" onchange="onChangeTest4(this)" id="states" >
+			<select name="state3" onchange="onChangeTest4(this)" id="states" >
     <option value="">--Choose State 3--</option>
      <% for(var i=0; i<states.length; i++) {%>
   <option value=<%=i%>><%=states[i].state%></option>
   <%}%>
   
 </select>
-            <select id="city3" name="city"  id="city" >
+            <select id="city3" name="city3" >
     <option value="">--Choose City 3--</option>
     
   
