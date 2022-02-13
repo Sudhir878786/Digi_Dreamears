@@ -1,6 +1,108 @@
+<body>
+    <ul>
+      <li><a onclick="location.href='/index.ejs'"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+      <li><a href="#"><i class="fa fa-bus" aria-hidden="true"></i></a></li>
+      <li class="active"><a href="#"><i class="fa fa-drivers-license" aria-hidden="true"></i></a></li>
+      <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i></a></li>
+      <li><a href="#"><i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+      <li><a href="#"><i class="fa fa-cog" aria-hidden="true"></i></a></li>
+    </ul>
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://use.fontawesome.com/e7cb172c8c.js"></script>
+  </body>
+  
+  <style>
+body, ul, li{
+  margin: 0;
+  padding: 0;
+}
+body{
+  height: 1000px;
+  background: #222;
+}
+ul{
+  background: #333;
+  min-width: 30px;
+  height: 2657px;
+  box-sizing: border-box;
+  position: fixed;
+}
+li{
+  list-style-type: none;
+  padding: 10px 0 10px 0px;
+  border-bottom: 1px solid #222;
+  transform: translateY(55px);
+  text-align: center;
+  cursor: pointer;
+}
+a{
+  color: #aaa;
+  text-decoration: none;
+  padding: 10px 10px;
+}
+li.active{
+  background: #222;
+  opacity: 1;
+}
+li:not(.active):hover {
+  background: #2c2c2c;
+}
+img{
+  width: 30px;
+  opacity: 0.6;
+}
+li:hover img, .active img{
+  opacity: 1;
+}
+  </style>
+  <script>
+      $('ul li').click(function(){
+    $('ul li').removeClass("active");
+    $(this).addClass("active");
+});
+  </script>
 <!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<meta content="text/html;charset=utf-8"
+			http-equiv="Content-Type" />
+		<meta content="utf-8"
+			http-equiv="encoding" />
+		<!-- Jquery -->
+		<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+		</script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+		<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">
+		</script>
+
+		<!-- Personalized Includes -->
+		<!-- CSS -->
+		<style>
+			.center {
+				margin: 0 auto;
+				text-align: center;
+				justify-content: center;
+			}
+			.btn-div {
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		
+        <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,6 +156,7 @@
 
 
 <body>
+   
   
     <div class="container-fluid p-4" >
         <div class="dash">
@@ -167,4 +270,7 @@ body {
 </div>
     
 </body>
+</html>
+
+	</body>
 </html>
