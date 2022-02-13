@@ -3,47 +3,246 @@
 <html>
 
 <head>
+  
+    <p2>
 
+    </p2>
+  <head>
+  <style>
+  p.center {
+    text-align: center;
+    color: red;
+  }
+  
+  p.large {
+    font-size: 300%;
+  }
+  </style>
+  </head>
+  <html>
+	<head>
+		
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<meta content="text/html;charset=utf-8"
+			http-equiv="Content-Type" />
+		<meta content="utf-8"
+			http-equiv="encoding" />
+		<!-- Jquery -->
+		<script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+		</script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+		<script src=
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js">
+		</script>
+
+		<!-- Personalized Includes -->
+		<!-- CSS -->
+		<style>
+			.center {
+				margin: 0 auto;
+				text-align: center;
+				justify-content: center;
+			}
+			.btn-div {
+				margin-top: 20px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="modal fade" id="main-modal">
+			<div class="modal-dialog modal-dialog-centered modal-lg">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header"
+						id="modal-header">
+						<h4 class="modal-title"
+							id="modal-title">
+						Are You Sure You Want to Logout?
+						</h4>
+						<button type="button"
+								class="close"
+								data-dismiss="modal">
+							×
+						</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body" id="modal-body">
+					You have to Login again using your registerd email!!
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer" id="modal-footer">
+						
+
+						<!--New Button declared here...-->
+						<button class="btn btn-danger" data-dismiss="modal">
+							YES
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="center btn-div">
+			<div>
+				
+			</div>
+			<br />
+			<button class="btn btn-success"
+					data-toggle="modal"
+					data-target="#main-modal">
+				logout
+			</button>
+      <button class="btn btn-success"
+      data-toggle=""
+      data-target="">
+    Home
+  </button>
+		</div>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+  <body>
+    
+  
+  <h1 class="center"></h1>
+  <p class="center"></p>
+
+  
+  </body>
+  </html>
+  
+
+  <div class="container">
+    <h2 class="title">
+      <span class="title-word title-word-1">List of Dealers</span>
+      <span class="title-word title-word-2"> who have</span>
+      <span class="title-word title-word-3">booked</span>
+      <span class="title-word title-word-4">you.</span>
+    </h2>
+  </div>
+  
+  
+  
+  <style>
+    .title-word {
+  animation: color-animation 4s linear infinite;
+}
+
+.title-word-1 {
+  --color-1: #DF8453;
+  --color-2: #3D8DAE;
+  --color-3: #E4A9A8;
+}
+
+.title-word-2 {
+  --color-1: #DBAD4A;
+  --color-2: #ACCFCB;
+  --color-3: #17494D;
+}
+
+.title-word-3 {
+  --color-1: #ACCFCB;
+  --color-2: #E4A9A8;
+  --color-3: #ACCFCB;
+}
+
+.title-word-4 {
+  --color-1: #3D8DAE;
+  --color-2: #DF8453;
+  --color-3: #E4A9A8;
+}
+
+@keyframes color-animation {
+  0%    {color: var(--color-1)}
+  32%   {color: var(--color-1)}
+  33%   {color: var(--color-2)}
+  65%   {color: var(--color-2)}
+  66%   {color: var(--color-3)}
+  99%   {color: var(--color-3)}
+  100%  {color: var(--color-1)}
+}
+
+/* Here are just some visual styles. 🖌 */
+
+.container {
+  display: grid;
+  place-items: center;  
+  text-align: center;
+  height: 80vh
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 2.5vw;
+  text-transform: uppercase;
+}
+  </style>
+  
   <div class="container">
 
     <% for(var i=0;i<dealers.length;i++){%>
       <div class="card">
         <div class="box">
           <div class="container"><img
-              src="https://th.bing.com/th/id/OIP.KFrnNe0PZnIv0NEkOdKgBgHaER?w=295&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7"
+              src="https://th.bing.com/th/id/OIP.oCv1YArOEO74WHNQgaWnuwHaFj?w=256&h=192&c=7&r=0&o=5&dpr=1.5&pid=1.7"
               width="90%">
 
             <table>
               <tr>
                 <th>Name: </th>
                 <td><%=dealers[i].name%></td>
+              <tr>
+                <th>Mobile: </th>
+                <td><%=dealers[i].mobile%></td>
+              </tr>
+              <tr>
+                <th>Nature: </th>
+                <td><%=dealers[i].natureOfMaterial%></td>
+              </tr>
+              <tr>
+                <th>Weight: </th>
+                <td><%=dealers[i].weightOfMaterial%></td>
+              </tr>
+              <tr>
+                <th>Quantity: </th>
+                <td><%=dealers[i].quantity%></td>
+              </tr>
+              <tr>
+                <th>State: </th>
+                <td><%=dealers[i].state%></td>
+              </tr>
+              <tr>
+                <th>City: </th>
+                <td><%=dealers[i].city%></td>
+              </tr>
+              <tr>
+                <th>
+                  Email: 
+                </th>
+                <td>
+                <a href="mailto:<%=dealers[i].email%>" style="color:goldenrod"></style>
+                  <%=dealers[i].email%>
+              </a></td>
+              </tr>
+              <!-- <tr>
+                <th >Email: </th>
+                <td><%=dealers[i].email%></td>
+              </tr> -->
               </tr>
             </table>
-            <p><b style="color: rgb(247, 247, 247);">Name:</b>
-              <%=dealers[i].name%>
-            </p><br />
-            <p><b style="color: rgb(247, 247, 247);">Mobile:</b>
-              <%=dealers[i].mobile%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">NatureOfMaterial:</b>
-              <%=dealers[i].natureOfMaterial%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">WeightOfMaterial:</b>
-              <%=dealers[i].weightOfMaterial%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">Quantity:</b>
-              <%=dealers[i].quantity%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">State:</b>
-              <%=dealers[i].state%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">City:</b>
-              <%=dealers[i].city%>
-            </p>
-            <p><b style="color: rgb(247, 247, 247);">Email:</b>
-              <%=dealers[i].email%>
-            </p>
-            <a href="mailto:<%=dealers[i].email%>"> Contact</a>
+            
+          
+            
+            
+            
+            <!-- <a href="mailto:<%=dealers[i].email%>"> Email</a> -->
           </div>
         </div>
       </div>
@@ -68,9 +267,9 @@
       align-items: center;
       flex-wrap: wrap;
       min-height: 100vh;
-      background: #302f3d;
+      background: #452435;
       background: -webkit-linear-gradient(to right, #3d4e3e, rgba(43, 61, 48, 0.158));
-      background: linear-gradient(to right, #33304c, rgba(41, 40, 62, 0.377));
+      background: linear-gradient(to right, #111e18, rgba(41, 40, 62, 0.377));
 
     }
 
@@ -85,11 +284,11 @@
 
     body .container .card {
       position: relative;
-      min-width: 320px;
-      height: 440px;
+      min-width: 330px;
+      height: 480px;
       box-shadow: inset 5px 5px 5px rgba(32, 194, 32, 0.2),
-        inset -5px -5px 15px rgba(78, 179, 50, 0.1),
-        5px 5px 15px rgba(23, 4, 230, 0.3), -5px -5px 15px rgba(255, 255, 255, 0.1);
+        inset -5px -5px 15px rgba(235, 232, 232, 0.578),
+        5px 5px 15px rgba(30, 29, 39, 0.544), -5px -5px 15px rgba(255, 255, 255, 0.1);
       border-radius: 15px;
       margin: 30px;
       transition: 0.5s;
@@ -113,7 +312,9 @@
       left: 20px;
       right: 20px;
       bottom: 20px;
-      background: #428a4617;
+      background: #982121db;
+      background: -webkit-linear-gradient(to right, #903333, rgba(43, 61, 48, 0.158));
+      background: linear-gradient(to right, #312e5d, rgba(41, 40, 62, 0.377));
       border-radius: 15px;
       display: flex;
       justify-content: center;
@@ -123,7 +324,7 @@
     }
 
     body .container .card .box:hover {
-      transform: translateY(-50px);
+      transform: translateY(-90px);
     }
 
     body .container .card .box:before {
@@ -184,3 +385,5 @@
       color: #000;
     }
   </style>
+
+  
