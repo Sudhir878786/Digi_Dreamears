@@ -82,7 +82,7 @@ function timer(remaining) {
   var m = Math.floor(remaining / 60);
   var s = remaining % 60;
   m = m < 10 ? "0" + m : m;
-  s = s <script 10 ? "0" + s : s;
+  s = s < 10 ? "0" + s : s;
   document.getElementById("countdown").innerHTML = `Time left: ${m} : ${s}`;
   remaining -= 1;
   if (remaining >= 0 && timerOn) {
@@ -102,4 +102,4 @@ function timer(remaining) {
 }
 timer(60);
 
-</script>
+</>

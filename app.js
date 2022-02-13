@@ -221,6 +221,9 @@ router.post("/otp4", function (req, res) {
     sessionId.isDealer=false;
     res.redirect("/driverDashboard/"+sessionId.email);
   }
+  else{
+    res.redirect("/driver")
+  }
 });
 router.post("/otp3", function (req, res) {
   // const email=req.params.email;
@@ -238,6 +241,9 @@ router.post("/otp3", function (req, res) {
     sessionId.isDriver=false;
     //  res.redirect("dealerDasboard/"+email4);
      res.redirect("/dealerDasboard/"+sessionId.email);
+  }
+  else{
+    res.redirect("/dealer")
   }
 });
 var are;
